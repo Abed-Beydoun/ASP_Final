@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const userRoutes = require('./Routes/User');
 const schedulingRoutes = require('./Routes/Scheduling');
+const auth = require('./Middleware/Authentication');
 const cors = require('cors');
 
 
@@ -16,6 +17,8 @@ app.use((req,res,next)=>{
    console.log(req.path,req.method);
    next();
 });
+ //Authentication 
+app.use(auth);
 
  //cors
 const options = {
@@ -32,11 +35,11 @@ app.use('/api/scheduling',schedulingRoutes);
 
 
 //Connect to Databse
-mongoose.connect("mongodb+srv://AbedBeydoun:Abed3569AnB@asp.0sm6zpb.mongodb.net/?retryWrites=true&w=majority&appName=ASP")
+mongoose.connect(process.env.MONGODB_URI)
   .then(()=>{
     //Listen for requests
-    app.listen(5500,()=>{
-    console.log('Connected to database & Listening on port',5500);
+    app.listen(process.env.PORT,()=>{
+    console.log('Connected to database & Listening on port',process.env.PORT);
     });
   })
   .catch((error)=>{

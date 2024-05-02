@@ -1,5 +1,5 @@
 const express = require('express');
-//const auth = require('../Middleware/Authentication');
+const auth = require('../Middleware/Authentication');
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ router.post('/login',userLogin);
 router.post('/signup',userSignup);
 
 //Check authentication for routes
-//router.use(auth);
+router.use(auth);
 
 //Add student info
 router.post('/addUserInfo',addUserInfo);

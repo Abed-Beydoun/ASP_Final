@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-//const auth = require('../Middleware/Authentication');
+const auth = require('../Middleware/Authentication');
 
 //Controller Functions
 const {
@@ -14,7 +14,7 @@ const {
 } = require('../Controllers/scheduleController');
 
 //Check authentication for routes
-//router.use(auth);
+router.use(auth);
 
 
 //Send student info

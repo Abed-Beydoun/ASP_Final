@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const express = require('express');
 const userRoutes = require('./Routes/User');
 const schedulingRoutes = require('./Routes/Scheduling');
-const auth = require('./Middleware/Authentication');
 const cors = require('cors');
 
 
@@ -17,8 +16,7 @@ app.use((req,res,next)=>{
    console.log(req.path,req.method);
    next();
 });
- //Authentication 
-app.use(auth);
+
 
  //cors
 const options = {

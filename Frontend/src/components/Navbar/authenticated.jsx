@@ -9,14 +9,14 @@ const Navbar = () => {
   const href = useHref();
 
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="bg-white shadow z-50">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="flex flex-shrink-0 items-center">
-                  <NavLink to="/home">
+                  <NavLink to="/dashboard">
                     <img
                       className="h-8 w-auto"
                       src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
@@ -28,17 +28,17 @@ const Navbar = () => {
                   {/* Current: "border-green-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                   <NavLink
                     exact
-                    to="/home"
+                    to="/dashboard"
                     className={classNames(
-                      href === '/home' ? ' border-b-2' : '',
+                      href === '/dashboard' ? ' border-b-2' : '',
                       'inline-flex items-center border-green-500 px-1 pt-1 text-sm font-medium text-gray-900'
                     )}
                   >
-                    Home
+                    Dashboard
                   </NavLink>
                   <NavLink
                     exact
-                    to="/"
+                    to="/form"
                     className={classNames(
                       href === '/' ? ' border-b-2' : '',
                       'inline-flex items-center border-green-500 px-1 pt-1 text-sm font-medium text-gray-900'
@@ -127,17 +127,17 @@ const Navbar = () => {
               {/* Current: "bg-green-50 border-green-500 text-green-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
               <Disclosure.Button
                 as="a"
-                href="/home"
+                href="/dashboard"
                 className={classNames(
-                  href === '/home' ? ' border-b-2' : '',
+                  href === '/dashboard' ? ' border-b-2' : '',
                   'inline-flex items-center border-green-500 px-1 pt-1 text-sm font-medium text-gray-900'
                 )}
               >
-                Home
+                Dashboard
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="/"
+                href="/form"
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
               >
                 Form

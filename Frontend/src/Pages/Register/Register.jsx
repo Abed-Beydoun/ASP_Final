@@ -1,239 +1,141 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  isValidEmail,
-  emailExists,
-  getUsersFromLocalStorage,
-  saveUsersToLocalStorage,
-} from '../validationUtil';
-import { Link } from 'react-router-dom';
-
-const Register = () => {
-  const [formData, setFormData] = useState({
-    id: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  });
-
-  const [inputErrors, setInputErrors] = useState({
-    id: false,
-    firstName: false,
-    lastName: false,
-    email: false,
-    password: false,
-  });
-
-  const { id, firstName, lastName, email, password } = formData;
-  const [users, setUsers] = useState([]);
+import React, { useContext, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { usersAxios } from '../../lib/axios';
+import { toast } from 'sonner';
+import { AuthContext } from '../../providers/authProvider';
+const Login = () => {
   const navigate = useNavigate();
-
-  //getting users from local storage
-  useEffect(() => {
-    // Update users state when local storage changes
-    setUsers(getUsersFromLocalStorage());
-  }, []); // Empty dependency array ensures this effect runs only once after the initial render
-
-  const [errorMessages, setErrorMessages] = useState({
-    id: '',
-    firstName: '',
-    lastName: '',
+  const { login } = useContext(AuthContext);
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
-  const clearErrorMessage = (fieldId) => {
-    setErrorMessages((prevErrors) => ({
-      ...prevErrors,
-      [fieldId]: '',
-    }));
-
-    setInputErrors((prevInputErrors) => ({
-      ...prevInputErrors,
-      [fieldId]: false,
-    }));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await usersAxios({
+        method: 'POST',
+        url: '/login',
+        data: {
+          email: formData.email,
+          password: formData.password,
+        },
+      });
+      localStorage.setItem('token', res.data.token);
+      login(res.data.token, true);
+      navigate('/home');
+    } catch (error) {
+      console.log(error.response.data);
+      toast.error(error.response.data.error, {
+        className: 'text-red-500',
+        duration: 3000,
+        position: 'top-right',
+        dismissible: true,
+        cancel: {
+          label: 'Dismiss',
+          onClick: () => {
+            toast.dismiss();
+          },
+        },
+      });
+    }
   };
-
-  const displayErrorMessage = (fieldId, message) => {
-    setErrorMessages((prevErrors) => {
-      return {
-        ...prevErrors,
-        [fieldId]: Array.isArray(message) ? message.join(' ') : message,
-      };
-    });
-
-    setInputErrors((prevInputErrors) => ({
-      ...prevInputErrors,
-      [fieldId]: true,
-    }));
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (e) => {
+    const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [id]: value,
     }));
-
-    // Reset the error message when the user types
-    clearErrorMessage(name);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    var errors = [];
-
-    if (!id) {
-      errors.push('id is required.');
-      displayErrorMessage('id', 'ID is required.');
-    } else if (id.length < 8) {
-      errors.push('ID must be at least 8 characters long.');
-      displayErrorMessage('id', 'ID must be at least 6 characters long.');
-    } else if (users.some((user) => user.id === id)) {
-      errors.push('ID already exists. Please use a different ID.');
-      displayErrorMessage(
-        'id',
-        'ID already exists. Please use a different ID.'
-      );
-    }
-
-    if (!firstName) {
-      errors.push('First name is required.');
-      displayErrorMessage('firstName', 'First name is required.');
-    }
-
-    if (!lastName) {
-      errors.push('Last name is required.');
-      displayErrorMessage('lastName', 'Last name is required.');
-    }
-
-    if (!email) {
-      errors.push('Email is required.');
-      displayErrorMessage('email', 'Email is required.');
-    } else if (!isValidEmail(email)) {
-      errors.push('Enter a valid email address.');
-      displayErrorMessage('email', 'Enter a valid email address.');
-    } else if (emailExists(email, null, users)) {
-      errors.push('Email already exists. Please use a different email.');
-      displayErrorMessage(
-        'email',
-        'Email already exists. Please use a different email.'
-      );
-    }
-
-    if (!password) {
-      errors.push('Password is required.');
-      displayErrorMessage('password', 'Password is required.');
-    } else if (password.length < 6) {
-      errors.push('Password must be at least 6 characters long.');
-      displayErrorMessage(
-        'password',
-        'Password must be at least 6 characters long.'
-      );
-    }
-    // Display errors, if any
-    if (errors.length > 0) {
-      return displayErrorMessage(errors);
-    }
-
-    const newUser = {
-      id: id,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-    };
-
-    const updatedUsers = [...users, newUser];
-    setUsers(updatedUsers);
-    saveUsersToLocalStorage(updatedUsers);
-
-    navigate('/login');
-  };
-
   return (
-    <div className="reg-container">
-      {/*  child2 section starts here */}
-      <div className="child2 reg-child">
-        <h1>Register</h1>
-        <div className="container2">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="id"
-              value={formData.id}
-              onChange={handleInputChange}
-              placeholder="Your ID"
-              className={inputErrors.id ? 'error-input' : ''}
-            />
-            {errorMessages.id && (
-              <span className="error-message-reg">{errorMessages.id}</span>
-            )}
+    <div className="flex min-h-screen flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <img
+          className="mx-auto h-10 w-auto"
+          src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
+          alt="Your Company"
+        />
+        <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          Create your account
+        </h2>
+      </div>
 
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              placeholder="First name"
-              className={inputErrors.firstName ? 'error-input' : ''}
-            />
-            {errorMessages.firstName && (
-              <span className="error-message-reg">
-                {errorMessages.firstName}
-              </span>
-            )}
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              placeholder="Last name"
-              className={inputErrors.lastName ? 'error-input' : ''}
-            />
-            {errorMessages.lastName && (
-              <p className="error-message-reg">{errorMessages.lastName}</p>
-            )}
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder="Email"
-              className={inputErrors.email ? 'error-input' : ''}
-            />
-            {errorMessages.email && (
-              <p className="error-message-reg">{errorMessages.email}</p>
-            )}
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              placeholder="Password"
-              className={inputErrors.password ? 'error-input' : ''}
-            />
-            {errorMessages.password && (
-              <p className="error-message-reg">{errorMessages.password}</p>
-            )}
-            <button>Register</button>
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+        <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Email address
+              </label>
+              <div className="mt-2">
+                <input
+                  onChange={handleChange}
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Password
+              </label>
+              <div className="mt-2">
+                <input
+                  onChange={handleChange}
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="text-sm leading-6">
+                <NavLink
+                  to="/login"
+                  className="font-semibold text-gray-600 hover:text-green-500"
+                >
+                  Already Have an account?
+                </NavLink>
+              </div>
+              <div className="text-sm leading-6">
+                <NavLink
+                  to="/forgot-password"
+                  className="font-semibold text-green-600 hover:text-green-500"
+                >
+                  Forgot password?
+                </NavLink>
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              >
+                Sign in
+              </button>
+            </div>
           </form>
-
-          <div>
-            <p className="sign-up">or signup with </p>
-          </div>
-          <div>
-            <p>
-              Already have an account ? <Link to="/">Login</Link>
-            </p>
-          </div>
         </div>
       </div>
-      {/*  child2 section ends here  */}
     </div>
   );
 };
 
-export default Register;
+export default Login;

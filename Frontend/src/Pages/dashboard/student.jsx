@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar } from '../components/index';
-import { schedulingAxios } from '../lib/axios';
+import { schedulingAxios } from '../../lib/axios';
 
 const Home = () => {
   const [courseType, setCourseType] = useState('');
@@ -22,13 +21,8 @@ const Home = () => {
         method: 'GET',
         url: endpoint,
       });
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
-      }
-      const jsonData = await response.json();
-      // console.log('Data received:', jsonData);
-      const parsedData = JSON.parse(jsonData);
-      setData(parsedData.data);
+      const parsedData = JSON.parse(response.data ?? '{}');
+      setData(parsedData?.data);
       setCourseType(type);
     } catch (error) {
       console.error('Error fetching data:', error.message);

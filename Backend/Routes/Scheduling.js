@@ -10,38 +10,31 @@ const {
   optimizedSchedule,
   addElectiveCourse,
   addMajorCourse,
-  deleteCourse
+  deleteCourse,
 } = require('../Controllers/scheduleController');
 
 //Check authentication for routes
 router.use(auth);
 
-
 //Send student info
-router.post('/studentInfo',studentInfo);
+router.post('/studentInfo', studentInfo);
 
 //Get available major courses
-router.get('/majorCourses',majorCourses);
-
+router.get('/majorCourses', majorCourses);
 
 //Get available elective courses
-router.get('/electiveCourses',electiveCourses);
-
+router.get('/electiveCourses', electiveCourses);
 
 //Get optimized schedules
-router.get('/optimizedSchedule',optimizedSchedule);
-
+router.get('/optimizedSchedule', optimizedSchedule);
 
 //Add elective course
-router.put('/addElectiveCourse',addElectiveCourse);
-
+router.put('/addElectiveCourse', addElectiveCourse);
 
 //Add major course
-router.put('/addMajorCourse',addMajorCourse);
-
+router.put('/addMajorCourse', addMajorCourse);
 
 //Delete course
-router.delete('/deleteCourse',deleteCourse);
-
+router.delete('/deleteCourse', deleteCourse);
 
 module.exports = router;

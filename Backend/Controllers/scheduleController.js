@@ -10,7 +10,7 @@ const studentInfo = async (req, res) => {
       days_of_unavailability,
       campus,
       number_of_electives,
-      number_of_major
+      number_of_major,
     } = req.body;
 
     //Create an object with the student data
@@ -20,16 +20,22 @@ const studentInfo = async (req, res) => {
       days_of_unavailability,
       campus,
       number_of_electives,
-      number_of_major
+      number_of_major,
     };
 
     //Send data to Python server
-    const response = await axios.post('http://localhost:8000/studentInfo', studentData);
+    const response = await axios.post(
+      'http://localhost:8000/studentInfo',
+      studentData
+    );
 
     //Check if the request was successful
     if (response.status === 200) {
       //Check if the message indicates successful saving
-      if (response.data && response.data.message === 'Student info received and saved successfully') {
+      if (
+        response.data &&
+        response.data.message === 'Student info received and saved successfully'
+      ) {
         console.log('Student info added successfully');
         res.send({ message: 'Student info added successfully' });
       } else {
@@ -47,7 +53,7 @@ const studentInfo = async (req, res) => {
 };
 
 //Available major courses
-const majorCourses = async(req, res) => {
+const majorCourses = async (req, res) => {
   try {
     const response = await axios.get('http://localhost:8000/majorCourses');
     res.status(200).json(response.data);
@@ -57,90 +63,91 @@ const majorCourses = async(req, res) => {
   }
 };
 
-
 //Available elective courses
-const electiveCourses = async(req, res) => {
+const electiveCourses = async (req, res) => {
   try {
     const response = await axios.get('http://localhost:8000/electiveCourses');
-    res.status(200).json(response.data);
+    return res.status(200).json(response.data);
   } catch (error) {
     console.error('Error fetching elective courses:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-
 //Optimized schedule
-const optimizedSchedule = async(req, res) => {
+const optimizedSchedule = async (req, res) => {
   try {
     const response = await axios.get('http://localhost:8000/optimizedSchedule');
     res.status(200).json(response.data);
   } catch (error) {
     console.error('Error fetching optimized schedule:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
-  } 
+  }
 };
-
 
 //Add elective course
-const addElectiveCourse = async(req,res) =>{
-  try{
+const addElectiveCourse = async (req, res) => {
+  try {
     //get the crn from the request body
-    const {crn} = req.body;
-  
-    const response = await axios.post(`http://localhost:8000/addElectiveCourse/${crn}`);
-  
+    const { crn } = req.body;
+
+    const response = await axios.post(
+      `http://localhost:8000/addElectiveCourse/${crn}`
+    );
+
     const updatedSchedule = response.data;
-    
+
     res.status(200).json(updatedSchedule);
-  } catch (error){
-     console.error('Error adding elective course:', error.message);
-     res.status(500).json({ error: 'Internal Server Error' });
+  } catch (error) {
+    console.error('Error adding elective course:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 //Add major course
-const addMajorCourse = async(req,res) =>{
-  try{
+const addMajorCourse = async (req, res) => {
+  try {
     //get the crn from the request body
-    const {crn} = req.body;
-  
-    const response = await axios.post(`http://localhost:8000/addMajorCourse/${crn}`);
-  
+    const { crn } = req.body;
+
+    const response = await axios.post(
+      `http://localhost:8000/addMajorCourse/${crn}`
+    );
+
     const updatedSchedule = response.data;
 
     res.status(200).json(updatedSchedule);
-  } catch (error){
-     console.error('Error adding major course:', error.message);
-     res.status(500).json({ error: 'Internal Server Error' });
+  } catch (error) {
+    console.error('Error adding major course:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-
 //Delete course
-const deleteCourse = async(req,res) =>{
-  try{
+const deleteCourse = async (req, res) => {
+  try {
     //get the crn from the request body
-    const {crn} = req.body;
-  
-    const response = await axios.post(`http://localhost:8000/deleteCourse/${crn}`);
-  
+    const { crn } = req.body;
+
+    const response = await axios.post(
+      `http://localhost:8000/deleteCourse/${crn}`
+    );
+
     const updatedSchedule = response.data;
 
     res.status(200).json(updatedSchedule);
-  } catch (error){
-     console.error('Error deleting course:', error.message);
-     res.status(500).json({ error: 'Internal Server Error' });
+  } catch (error) {
+    console.error('Error deleting course:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 module.exports = {
-    studentInfo,
-    majorCourses,
-    electiveCourses,
-    optimizedSchedule,
-    addElectiveCourse,
-    addMajorCourse,
-    deleteCourse
+  studentInfo,
+  majorCourses,
+  electiveCourses,
+  optimizedSchedule,
+  addElectiveCourse,
+  addMajorCourse,
+  deleteCourse,
 };

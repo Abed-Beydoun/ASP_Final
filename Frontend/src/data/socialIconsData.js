@@ -1,7 +1,12 @@
-import { FaInstagram, FaFacebookF, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaLinkedin,
+  FaTwitter,
+} from 'react-icons/fa';
 
 const socialIconsData = [
-  { icon: <FaInstagram />  },
+  { icon: <FaInstagram /> },
   { icon: <FaFacebookF /> },
   { icon: <FaTwitter /> },
   { icon: <FaLinkedin /> },

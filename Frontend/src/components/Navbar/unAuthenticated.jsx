@@ -1,28 +1,66 @@
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
+import { NavLink, useHref } from 'react-router-dom';
 
 const Navbar = () => {
+  const href = useHref();
+
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="bg-white shadow z-50">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 justify-between">
-              <div className="flex">
-                <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
-                    alt="Your Company"
-                  />
+              <div className="flex justify-between w-full">
+                <div className="hidden sm:ml-6 sm:flex sm:space-x-8 items-center">
+                  <NavLink to="/">
+                    <img
+                      className="h-8 w-auto"
+                      src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
+                      alt="Your Company"
+                    />
+                  </NavLink>
+                  <NavLink
+                    exact
+                    to="/about-us"
+                    className={classNames(
+                      href === '/about-us' ? ' border-b-2' : '',
+                      'inline-flex items-center border-green-500 px-1 pt-1 text-sm font-medium text-gray-900'
+                    )}
+                  >
+                    About us
+                  </NavLink>
+                  <NavLink
+                    exact
+                    to="/contact-us"
+                    className={classNames(
+                      href === '/contact-us' ? ' border-b-2' : '',
+                      'inline-flex items-center border-green-500 px-1 pt-1 text-sm font-medium text-gray-900'
+                    )}
+                  >
+                    Contact us
+                  </NavLink>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                  {/* Current: "border-green-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
+                  <NavLink
+                    exact
+                    to="/register"
+                    className={classNames(
+                      href === '/register' ? ' border-b-2' : '',
+                      'inline-flex items-center border-green-500 px-1 pt-1 text-sm font-medium text-gray-900'
+                    )}
+                  >
+                    Register
+                  </NavLink>
+
                   <NavLink
                     exact
                     to="/login"
-                    className="inline-flex items-center border-b-2 border-green-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                    className={classNames(
+                      href === '/login' ? ' border-b-2' : '',
+                      'inline-flex items-center border-green-500 px-1 pt-1 text-sm font-medium text-gray-900'
+                    )}
                   >
                     Login
                   </NavLink>

@@ -1,1 +1,8 @@
-{"major": "Mathematics", "finished_courses": ["Ipsum", "omnis", "necessi"], "days_of_unavailability": ["Non", "sequi", "illo", "nobis"], "campus": "debbieh", "number_of_electives": "378", "number_of_major": "129"}
+{
+  "major": "Mathematics",
+  "finished_courses": ["Ipsum", "omnis", "necessi"],
+  "days_of_unavailability": ["Non", "sequi", "illo", "nobis"],
+  "campus": "debbieh",
+  "number_of_electives": "378",
+  "number_of_major": "129"
+}

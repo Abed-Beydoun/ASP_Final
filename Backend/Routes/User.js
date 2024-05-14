@@ -1,21 +1,25 @@
-const express = require('express');
-const auth = require('../Middleware/Authentication');
+const express = require('express')
+const auth = require('../Middleware/Authentication')
 
-const router = express.Router();
+const router = express.Router()
 
 //Controller Functions
-const {userLogin,userSignup,addUserInfo} = require('../Controllers/userController');
-
-//Login route
-router.post('/login',userLogin);
-
-//Signup route
-router.post('/signup',userSignup);
-
-//Check authentication for routes
-router.use(auth);
+const {
+    userLogin,
+    userSignup,
+    editUserInfo,
+} = require('../Controllers/userController')
 
 //Add student info
-router.post('/addUserInfo',addUserInfo);
+router.route('/user-info').put(auth, editUserInfo)
 
-module.exports = router;
+module.exports = router
+
+/*
+HTTP- Requests 
+1- Method: GET|PUT|POST|DELETE|OPTION|PATCH|HEAD
+2- Url: /login /signup
+3- Body: data (heavy data / except for GET requests)
+4- Query: data (small amount)
+5- Headers: For example here lies our authorization, Authorization: Bearer token
+*/

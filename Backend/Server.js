@@ -1,45 +1,43 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const express = require('express');
-const userRoutes = require('./Routes/User');
-const schedulingRoutes = require('./Routes/Scheduling');
-const cors = require('cors');
-
+require('dotenv').config()
+const mongoose = require('mongoose')
+const express = require('express')
+const authRouter = require('./Routes/auth')
+const userRoutes = require('./Routes/User')
+const schedulingRoutes = require('./Routes/Scheduling')
+const cors = require('cors')
+const morgan = require('morgan')
 //Express app
-const app = express();
+const app = express()
 
 //Middleware
-app.use(express.json());
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+app.use(express.json()) // convert body to json
+app.use(morgan('dev'))
 
 //cors
 const options = {
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowHeaders: ['Content-Type', 'Authorization'],
-};
-app.use(cors(options));
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization'],
+}
+app.use(cors(options))
 
 //Routes
-app.use('/api/user', userRoutes);
-
-app.use('/api/scheduling', schedulingRoutes);
+app.use('/api/user', userRoutes)
+app.use('/api/auth', authRouter)
+app.use('/api/scheduling', schedulingRoutes)
 
 //Connect to Databse
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    //Listen for requests
-    app.listen(process.env.PORT, () => {
-      console.log(
-        'Connected to database & Listening on port',
-        process.env.PORT
-      );
-    });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+    .connect(process.env.MONGODB_URI)
+    .then(() => {
+        //Listen for requests
+        app.listen(process.env.PORT, () => {
+            console.log(
+                'Connected to database & Listening on port',
+                process.env.PORT,
+            )
+        })
+    })
+    .catch((error) => {
+        console.log(error)
+    })

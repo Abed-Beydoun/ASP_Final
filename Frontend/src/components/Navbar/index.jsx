@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../providers/authProvider';
-import AuthenticatedNavbar from './authenticated';
-import UnauthenticatedNavbar from './unAuthenticated';
+import React, { useContext } from 'react'
+import { AuthContext } from '../../providers/authProvider'
+import AuthenticatedNavbar from './authenticated'
+import UnauthenticatedNavbar from './unAuthenticated'
 const Index = () => {
-  const { isAuthenticated } = useContext(AuthContext);
-  if (isAuthenticated) {
-    return <AuthenticatedNavbar />;
-  }
+    const { isAuthenticated } = useContext(AuthContext)
+    if (isAuthenticated) {
+        return <AuthenticatedNavbar />
+    }
 
-  return <UnauthenticatedNavbar />;
-};
+    return <UnauthenticatedNavbar />
+}
 
-export default Index;
+export default Index

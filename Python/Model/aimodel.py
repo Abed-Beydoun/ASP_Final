@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 from io import StringIO
 import Model.student as student
+from Model.student import Student
+
 
 df = pd.read_csv('../Python/Data/CourseOfferring.csv')
 electives = pd.read_excel('../Python/Data/Electives.xlsx')
@@ -246,7 +248,6 @@ def generate_schedules(available, number, major):
   for i in range(len(available)):
     schedule10=pd.DataFrame(columns = available.columns.tolist())
     schedule10 = schedule10.iloc[0:0]
-
     new_order = list(range(start_index, len(available))) + list(range(0, end_index+1))
     for i in new_order:
       if len(schedule10['COURSE'].unique()) >= number:
@@ -340,9 +341,9 @@ def drop_course_manually(schedule:str, crn:int)->str:
   return schedule1.to_json(orient="table")
 
 
-def generate_final_schedule(major_course_offering:pd.DataFrame, electives_course_offering:pd.DataFrame, s:student.Student)->str:
+def generate_final_schedule(major_course_offering:pd.DataFrame, electives_course_offering:pd.DataFrame, s)->str:
+  
   major_data_cleaning = general_cleaning(major_course_offering)
-
   major_data_cleaning = major_data_cleaning.sort_values(by='COURSE_ATTRIBUTE', ignore_index=True)
 
   available_major = obtain_available_crs(major = s.major, campus = s.campus,finished_courses=s.finished_courses,

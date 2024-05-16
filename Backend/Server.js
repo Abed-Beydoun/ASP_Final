@@ -4,6 +4,7 @@ const express = require('express')
 const authRouter = require('./Routes/auth')
 const userRoutes = require('./Routes/User')
 const schedulingRoutes = require('./Routes/Scheduling')
+const contactRouter = require('./Routes/emails')
 const cors = require('cors')
 const morgan = require('morgan')
 //Express app
@@ -24,6 +25,7 @@ app.use(cors(options))
 //Routes
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRouter)
+app.use('/api/emails', contactRouter)
 app.use('/api/scheduling', schedulingRoutes)
 
 //Connect to Databse

@@ -76,21 +76,30 @@ const userSignup = async (req, res) => {
 
 //Edit user info
 const editUserInfo = async (req, res) => {
-    // Take input data from the request body
-    const {
-        major,
-        finished_courses,
-        days_of_unavailability,
-        campus,
-        number_of_electives,
-        number_of_major,
-    } = req.body
     try {
-        return res.status(204).json({})
+        await UserModel.findByIdAndUpdate(req.user._id, {
+            $set: req.body,
+        })
+        return res.status(200).json({
+            message: 'User information updated successfully!',
+        })
     } catch (error) {
         console.error('Error adding student information:', error.message)
         res.status(500).json({ error: 'Internal server error' })
     }
 }
+// Get user info
+const getUserInfo = async (req, res) => {
+    try {
+        const _id = req.user._id
+        const student = await UserModel.findById(_id)
+        return res.status(200).json({
+            user: student,
+        })
+    } catch (error) {
+        console.error('Error fetching student information:', error.message)
+        return res.status(500).json({ error: 'Internal server error' })
+    }
+}
 
-module.exports = { userSignup, userLogin, editUserInfo }
+module.exports = { userSignup, userLogin, editUserInfo, getUserInfo }

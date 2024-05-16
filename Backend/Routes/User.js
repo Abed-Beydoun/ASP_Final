@@ -8,10 +8,11 @@ const {
     userLogin,
     userSignup,
     editUserInfo,
+    getUserInfo,
 } = require('../Controllers/userController')
 
 //Add student info
-router.route('/user-info').put(auth, editUserInfo)
+router.route('/user-info').put(auth, editUserInfo).get(auth, getUserInfo)
 
 module.exports = router
 

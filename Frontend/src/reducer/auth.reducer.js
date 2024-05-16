@@ -1,4 +1,4 @@
-import { schedulingAxios, usersAxios } from '../lib/axios';
+import { authAxios, schedulingAxios, usersAxios } from '../lib/axios';
 
 const initState = {
   isAuthenticated: false,
@@ -14,6 +14,9 @@ const authReducer = (state = initState, action) => {
       schedulingAxios.defaults.headers.common[
         'Authorization'
       ] = `Bearer ${action.token}`;
+      authAxios.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${action.token}`;
       return {
         isAuthenticated: true,
         token: action.token,
@@ -26,6 +29,9 @@ const authReducer = (state = initState, action) => {
       schedulingAxios.defaults.headers.common[
         'Authorization'
       ] = `Bearer ${action.payload.token}`;
+      authAxios.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${action.token}`;
       return {
         ...action.payload,
         globalLoading: false,

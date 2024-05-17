@@ -245,8 +245,8 @@ const Index = () => {
                                     <select
                                         id="major"
                                         value={formData.major}
-                                        disabled
-                                        className="px-2 min-w-full block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6 disabled:bg-gray-200"
+                                        onChange={handleChange}
+                                        className="px-2 min-w-full block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6 bg-transparent"
                                     >
                                         <option selected disabled value="">
                                             Kindly select an option

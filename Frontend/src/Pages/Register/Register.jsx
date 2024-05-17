@@ -53,7 +53,7 @@ const Index = () => {
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <img
                     className="mx-auto h-10 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=600"
+                    src="https://hassans.s3.eu-central-1.amazonaws.com/e50353ce-467b-4962-abb4-4ee782ecafdf"
                     alt="Your Company"
                 />
                 <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -80,7 +80,7 @@ const Index = () => {
                                         type="first_name"
                                         autoComplete="current-password"
                                         required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                        className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -99,7 +99,7 @@ const Index = () => {
                                         type="text"
                                         autoComplete="current-password"
                                         required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                        className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>
                             </div>
@@ -121,7 +121,7 @@ const Index = () => {
                                     type="email"
                                     autoComplete="email"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -141,7 +141,7 @@ const Index = () => {
                                     type="password"
                                     autoComplete="current-password"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
@@ -179,4 +179,4 @@ const Index = () => {
     )
 }
 
-export default withRouter(Index, ['admin', 'student'], true)
+export default withRouter(Index, ['admin', 'student'], false)

@@ -1,0 +1,22 @@
+version: "3"
+services:
+  #Frontend service
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+      - python
+
+  #Backend service
+  backend:
+    build: ./Backend
+    ports:
+      - 3001:5500
+
+  #Python service
+  python:
+    build: ./Python
+    ports:
+      - 3002:8000
